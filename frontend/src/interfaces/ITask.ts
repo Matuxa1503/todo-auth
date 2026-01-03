@@ -20,3 +20,6 @@ export interface ITaskDeleteArgs {
   uid: string;
   taskId: string;
 }
+export interface ITaskUpdateIconArgs extends ITaskDeleteArgs {
+  isCompleted: boolean;
+}

@@ -37,8 +37,8 @@ export const TasksSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
-    completedTask(state, action: PayloadAction<{ id: string; isCompleted: boolean }>) {
-      const task = state.tasks.find((item) => item.id === action.payload.id);
+    completedTask(state, action: PayloadAction<{ taskId: string; isCompleted: boolean }>) {
+      const task = state.tasks.find((item) => item.id === action.payload.taskId);
       if (task) {
         task.isCompleted = !task.isCompleted;
       }
@@ -83,7 +83,7 @@ export const TasksSlice = createSlice({
       .addCase(deleteTask.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(deleteTask.fulfilled, (state, action: PayloadAction<{ taskId: string }>) => {
+      .addCase(deleteTask.fulfilled, (state, action) => {
         state.tasks = state.tasks.filter((item) => item.id !== action.payload.taskId);
       })
       .addCase(deleteTask.rejected, (state, action) => {

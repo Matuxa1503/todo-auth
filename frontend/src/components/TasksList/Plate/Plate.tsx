@@ -5,7 +5,8 @@ import { ITask } from '../../../interfaces/ITask';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { openPopupForEditTask } from '../../../store/reducers/PopupSlice';
 import { completedTask } from '../../../store/reducers/TasksSlice';
-import { deleteTask } from '../../../store/reducers/ActionCreators';
+import { deleteTask, toggleIconTask } from '../../../store/reducers/ActionCreators';
+import { debounce } from 'lodash';
 
 interface PlateProps {
   task: ITask;
@@ -15,14 +16,17 @@ export const Plate: FC<PlateProps> = ({ task }) => {
   const { uid } = useAppSelector((state) => state.userReducer);
   const dispatch = useAppDispatch();
 
-  const toggleIcon = () => {
-    const data = {
-      id: task.id,
-      isCompleted: task.isCompleted,
-    };
+  // const toggleIcon = debounce(() => {
+  //   if (task.id) {
+  //     const data = {
+  //       taskId: task.id,
+  //       isCompleted: !task.isCompleted,
+  //     };
 
-    dispatch(completedTask(data));
-  };
+  //     dispatch(completedTask(data));
+  //     dispatch(toggleIconTask({ uid, ...data }));
+  //   }
+  // }, 1000); остановился на изменении иконки выполнения задач с использованием debounce для оптимизации
 
   const handleUpdateTask = () => {
     const data = {
